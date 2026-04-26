@@ -1,17 +1,16 @@
-'''This Py file defines the TensorFlow dataset Class for the TensorFlow basic image
+"""This Py file defines the TensorFlow dataset Class for the TensorFlow basic image
 classification tutorial, found here:
-https://www.tensorflow.org/tutorials/keras/classification'''
+https://www.tensorflow.org/tutorials/keras/classification"""
 
 # TensorFlow and tf.keras
 import tensorflow as tf
 
 # Helper libraries
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class TensorFlowModel:
-#this class defines a dataset from a TensorFlow perspective
+    # this class defines a dataset from a TensorFlow perspective
     def __init__(self, inputShape, firstDenseNeurons, activation, secondDenseNeurons):
         self.inputShape = inputShape
         self.firstDenseNeurons = firstDenseNeurons
@@ -21,19 +20,25 @@ class TensorFlowModel:
         self.probabilityModel = None
 
     def compileModel(self):
-        self.model = tf.keras.Sequential([
-            tf.keras.layers.Flatten(input_shape=self.inputShape),
-            tf.keras.layers.Dense(self.firstDenseNeurons, activation=self.activation),
-            tf.keras.layers.Dense(self.secondDenseNeurons)
-        ])
+        self.model = tf.keras.Sequential(
+            [
+                tf.keras.layers.Flatten(input_shape=self.inputShape),
+                tf.keras.layers.Dense(
+                    self.firstDenseNeurons, activation=self.activation
+                ),
+                tf.keras.layers.Dense(self.secondDenseNeurons),
+            ]
+        )
         print("Model compiled.")
 
     def feedModel(self, trainImages, trainLabels, epochs):
         self.model.fit(trainImages, trainLabels, epochs=epochs)
         print("Model fed training data.")
 
-    def evaluateModelAccuracy(self, verbose):
-        testLoss, testAcc = self.model.evaluate(test_images, test_labels, verbose=verbose)
+    def evaluateModelAccuracy(self, test_images, test_labels, verbose):
+        testLoss, testAcc = self.model.evaluate(
+            test_images, test_labels, verbose=verbose
+        )
         result = {}
         result["Test loss"] = testLoss
         result["Test accuracy"] = testAcc
@@ -41,8 +46,9 @@ class TensorFlowModel:
         return result
 
     def createProbabilityModel(self):
-        self.probabilityModel = tf.keras.Sequential([self.model,
-                                             tf.keras.layers.Softmax()])
+        self.probabilityModel = tf.keras.Sequential(
+            [self.model, tf.keras.layers.Softmax()]
+        )
         print("Probability model created.")
 
     def createPredictions(self, imageset):

@@ -1,6 +1,6 @@
-'''This is the main Py file for the TensorFlow basic image
+"""This is the main Py file for the TensorFlow basic image
 classification tutorial, found here:
-https://www.tensorflow.org/tutorials/keras/classification'''
+https://www.tensorflow.org/tutorials/keras/classification"""
 
 # TensorFlow and tf.keras
 import tensorflow as tf
@@ -11,16 +11,24 @@ import matplotlib.pyplot as plt
 
 print(tf.__version__)
 
-if __name__ == '__main__':
-
-
-    #import data
+if __name__ == "__main__":
+    # import data
     fashion_mnist = tf.keras.datasets.fashion_mnist
 
     (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
-    class_names = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
-                   'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
+    class_names = [
+        "T-shirt/top",
+        "Trouser",
+        "Pullover",
+        "Dress",
+        "Coat",
+        "Sandal",
+        "Shirt",
+        "Sneaker",
+        "Bag",
+        "Ankle boot",
+    ]
     # explore data
     train_images.shape
 
@@ -32,7 +40,7 @@ if __name__ == '__main__':
 
     len(test_labels)
 
-    #preprocess the data
+    # preprocess the data
 
     plt.figure()
     plt.imshow(train_images[0])
@@ -56,33 +64,35 @@ if __name__ == '__main__':
 
     # Build the model
 
-    model = tf.keras.Sequential([
-        tf.keras.layers.Flatten(input_shape=(28, 28)),
-        tf.keras.layers.Dense(128, activation='relu'),
-        tf.keras.layers.Dense(10)
-    ])
+    model = tf.keras.Sequential(
+        [
+            tf.keras.layers.Flatten(input_shape=(28, 28)),
+            tf.keras.layers.Dense(128, activation="relu"),
+            tf.keras.layers.Dense(10),
+        ]
+    )
 
-    #compile the model
+    # compile the model
 
-    model.compile(optimizer='adam',
-                  loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
-                  metrics=['accuracy'])
+    model.compile(
+        optimizer="adam",
+        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        metrics=["accuracy"],
+    )
 
-    #Train the model
-    #feed
+    # Train the model
+    # feed
     model.fit(train_images, train_labels, epochs=10)
-    #evaluate accuracy
+    # evaluate accuracy
     test_loss, test_acc = model.evaluate(test_images, test_labels, verbose=2)
 
-    print('\nTest accuracy:', test_acc)
-    #make predictions
-    probability_model = tf.keras.Sequential([model,
-                                             tf.keras.layers.Softmax()])
+    print("\nTest accuracy:", test_acc)
+    # make predictions
+    probability_model = tf.keras.Sequential([model, tf.keras.layers.Softmax()])
     predictions = probability_model.predict(test_images)
     predictions[0]
     np.argmax(predictions[0])
     test_labels[0]
-
 
     def plot_image(i, predictions_array, true_label, img):
         true_label, img = true_label[i], img[i]
@@ -94,15 +104,18 @@ if __name__ == '__main__':
 
         predicted_label = np.argmax(predictions_array)
         if predicted_label == true_label:
-            color = 'blue'
+            color = "blue"
         else:
-            color = 'red'
+            color = "red"
 
-        plt.xlabel("{} {:2.0f}% ({})".format(class_names[predicted_label],
-                                             100 * np.max(predictions_array),
-                                             class_names[true_label]),
-                   color=color)
-
+        plt.xlabel(
+            "{} {:2.0f}% ({})".format(
+                class_names[predicted_label],
+                100 * np.max(predictions_array),
+                class_names[true_label],
+            ),
+            color=color,
+        )
 
     def plot_value_array(i, predictions_array, true_label):
         true_label = true_label[i]
@@ -113,9 +126,8 @@ if __name__ == '__main__':
         plt.ylim([0, 1])
         predicted_label = np.argmax(predictions_array)
 
-        thisplot[predicted_label].set_color('red')
-        thisplot[true_label].set_color('blue')
-
+        thisplot[predicted_label].set_color("red")
+        thisplot[true_label].set_color("blue")
 
     i = 0
     plt.figure(figsize=(6, 3))
@@ -147,7 +159,7 @@ if __name__ == '__main__':
     plt.tight_layout()
     plt.show()
 
-    #use the trained model
+    # use the trained model
 
     # Grab an image from the test dataset.
     img = test_images[1]
@@ -155,7 +167,7 @@ if __name__ == '__main__':
     print(img.shape)
 
     # Add the image to a batch where it's the only member.
-    img = (np.expand_dims(img, 0))
+    img = np.expand_dims(img, 0)
 
     print(img.shape)
 

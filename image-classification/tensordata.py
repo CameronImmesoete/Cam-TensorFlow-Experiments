@@ -1,17 +1,13 @@
-'''This Py file defines the TensorFlow dataset Class for the TensorFlow basic image
+"""This Py file defines the TensorFlow dataset Class for the TensorFlow basic image
 classification tutorial, found here:
-https://www.tensorflow.org/tutorials/keras/classification'''
-
-# TensorFlow and tf.keras
-import tensorflow as tf
+https://www.tensorflow.org/tutorials/keras/classification"""
 
 # Helper libraries
-import numpy as np
 import matplotlib.pyplot as plt
 
 
 class TensorFlowDataSet:
-#this class defines a dataset from a TensorFlow perspective
+    # this class defines a dataset from a TensorFlow perspective
     def __init__(self, dataset, class_names):
         self.rawDataset = dataset
         self.classNames = class_names
@@ -21,7 +17,9 @@ class TensorFlowDataSet:
         self.testLabels = None
 
     def loadData(self):
-        (self.trainImages, self.trainLabels), (self.testImages, self.testLabels) = self.rawDataset.load_data()
+        (self.trainImages, self.trainLabels), (self.testImages, self.testLabels) = (
+            self.rawDataset.load_data()
+        )
         print("Data loaded.")
 
     def exploreData(self):
