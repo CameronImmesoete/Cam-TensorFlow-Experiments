@@ -2,12 +2,10 @@
 classification tutorial, found here:
 https://www.tensorflow.org/tutorials/keras/classification"""
 
-# TensorFlow and tf.keras
-import tensorflow as tf
-
-# Helper libraries
-import numpy as np
+# Third-party libraries
 import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
 
 print(tf.__version__)
 
@@ -109,11 +107,7 @@ if __name__ == "__main__":
             color = "red"
 
         plt.xlabel(
-            "{} {:2.0f}% ({})".format(
-                class_names[predicted_label],
-                100 * np.max(predictions_array),
-                class_names[true_label],
-            ),
+            f"{class_names[predicted_label]} {100 * np.max(predictions_array):2.0f}% ({class_names[true_label]})",
             color=color,
         )
 
