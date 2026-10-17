@@ -2,11 +2,9 @@
 classification tutorial, found here:
 https://www.tensorflow.org/tutorials/keras/classification"""
 
-# TensorFlow and tf.keras
-import tensorflow as tf
-
-# Helper libraries
+# Third-party libraries
 import numpy as np
+import tensorflow as tf
 
 
 class TensorFlowModel:
